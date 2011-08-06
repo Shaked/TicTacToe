@@ -1,6 +1,7 @@
 <html>
 <head>
 <style>
+	.center{ text-align:center; margin-bottom: 8px; font-size: 25px;}
 	body { 		
 		font-family: Verdana;
 		background: #CCCCBF
@@ -159,6 +160,11 @@
 </script> 
 </head>
 <body>
+	<div class="center">
+		<a href="https://github.com/Shaked/TicTacToe/tree/master/TicTacToe" target="_blank">
+			GitHub - TicTacToe MinMax implementation	
+		</a> 
+	</div>
 	<div id="restart">
 		Restart Game 
 	</div>

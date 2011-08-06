@@ -43,18 +43,20 @@ class MinMax implements IMinMax {
 
 		foreach($gameBoard as $pos1=>$columns){
 			foreach($columns as $pos2=>$player){ 
-				$gameClone = clone $this->_game; 
-				if (false === $player){
-					$gameClone->setPosition(array($pos1,$pos2));
-					$gameClone->setPlayer();
-					$value = $this->minMove($gameClone,1,$choose,self::DEFAULT_MAX); 
-					$gameClone->setPosition(array($pos1,$pos2),true);
-					if ($value > $choose){
-						$choose = $value;
-						$move = array($pos1,$pos2); 
-					} 
-					$gameClone->setPlayer();
+				if (false !== $player){
+					continue; 
 				}
+				$gameClone = clone $this->_game; 
+				$gameClone->setPosition(array($pos1,$pos2));
+				$gameClone->setPlayer();
+				$value = $this->minMove($gameClone,1,$choose,self::DEFAULT_MAX); 
+				$gameClone->setPosition(array($pos1,$pos2),true);
+				if ($value > $choose){
+					$choose = $value;
+					$move = array($pos1,$pos2); 
+				} 
+				$gameClone->setPlayer();
+			
 			} 
 		}
 		
@@ -105,21 +107,22 @@ class MinMax implements IMinMax {
 		$gameBoard = $gameClone->getGameBoard();
 		foreach($gameBoard as $pos1=>$colmuns){
 			foreach($colmuns as $pos2=>$player){ 
-				if(false === $player){
-					$gameClone->setPosition(array($pos1,$pos2));
-					$gameClone->setPlayer();
-					$value = $this->minMove($gameClone,++$depth,$alpha,$beta); 
-					//return board so we won't have pos1,pos2 taken
-					$gameClone->setPosition(array($pos1,$pos2),true);
-					$gameClone->setPlayer();
-					if ($value > $alpha){ 
-						$alpha = $value; 
-					} 
-					
-					if ($alpha > $beta){
-						return $beta; 
-					} 
+				if(false !== $player){ 
+					continue ; 
 				}
+				$gameClone->setPosition(array($pos1,$pos2));
+				$gameClone->setPlayer();
+				$value = $this->minMove($gameClone,++$depth,$alpha,$beta); 
+				//return board so we won't have pos1,pos2 taken
+				$gameClone->setPosition(array($pos1,$pos2),true);
+				$gameClone->setPlayer();
+				if ($value > $alpha){ 
+					$alpha = $value; 
+				} 
+				
+				if ($alpha > $beta){
+					return $beta; 
+				} 
 			} 
 		}
 
@@ -144,21 +147,22 @@ class MinMax implements IMinMax {
 		
 		foreach($gameBoard as $pos1=>$colmuns){
 			foreach($colmuns as $pos2=>$player){ 
-				if(false === $player){
-					$gameClone->setPosition(array($pos1,$pos2));
-					$gameClone->setPlayer();
-					$value = $this->maxMove($gameClone,++$depth,$alpha,$beta); 
-					//return board so we won't have pos1,pos2 taken
-					$gameClone->setPosition(array($pos1,$pos2),true);
-					$gameClone->setPlayer();
-					if ($value < $beta){ 
-						$beta = $value; 
-					} 
-					
-					if ($beta < $alpha){
-						return $alpha; 
-					} 
+				if(false !== $player){
+					continue ; 	
 				}
+				$gameClone->setPosition(array($pos1,$pos2));
+				$gameClone->setPlayer();
+				$value = $this->maxMove($gameClone,++$depth,$alpha,$beta); 
+				//return board so we won't have pos1,pos2 taken
+				$gameClone->setPosition(array($pos1,$pos2),true);
+				$gameClone->setPlayer();
+				if ($value < $beta){ 
+					$beta = $value; 
+				} 
+				
+				if ($beta < $alpha){
+					return $alpha; 
+				} 
 			} 
 		}
 

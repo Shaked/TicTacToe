@@ -88,9 +88,10 @@ abstract class Game implements IGame {
 	protected static function isBoardFull(array $gameBoard){
 		foreach($gameBoard as $pos1=>$columns){
 			foreach($columns as $pos2=>$player){
-				if (false === $player){
-					$blankPositions[] = array($pos1,$pos2);
+				if (false !== $player){
+					continue ; 	
 				}
+				$blankPositions[] = array($pos1,$pos2);
 			}
 		}
 	
